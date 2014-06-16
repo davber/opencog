@@ -1,0 +1,27 @@
+# Installing the packages needed for development
+
+- name: Installing some tools
+  apt: name={{item}} state=present
+  with_items:
+    - emacs24
+    - doxygen
+    - valgrind-dev
+    - cmake
+    - autoconf
+
+- name: Installing library files
+  apt: name={{item}} state=present
+  with_items:
+    - libxerces-c2-dev
+
+
+- name: Build and install Boost
+  apt: name={{item}} state=present
+  with_items:
+    - libboost-date-time1.54-dev
+    - libboost-filesystem1.54-dev
+    - libboost-program-options1.54-dev
+    - libboost-regex1.54-dev
+    - libboost-serialization1.54-dev
+    - libboost-thread1.54-dev
+    - libboost-system1.54-dev

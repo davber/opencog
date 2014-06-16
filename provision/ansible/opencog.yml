@@ -1,0 +1,7 @@
+# Ansible Playbook for an OpenCog deployment
+# NOTE: it is currently rather simple, since it involves only one role
+
+- name: Setup the OpenCog box
+  hosts: opencogs
+  roles:
+    - opencog

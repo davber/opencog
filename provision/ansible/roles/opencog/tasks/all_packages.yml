@@ -1,0 +1,200 @@
+# Installing build packages
+
+- name: Install packages containing some tools
+  apt: name={{item}} state=present update_cache=yes cache_valid_time=3600
+  with_items:
+    - emacs24
+    - squashfs-tools
+    - genisoimage
+
+- name: Install Git
+  apt: name=git state=installed
+
+- name: Install admin packages
+  apt: name={{item}} state=present
+  with_items:
+    - apt-rdepends
+    - synaptic
+    - gdebi
+    - epiphany-browser
+
+- name: Install packages needed for builds
+  apt: name={{item}} state=present
+  with_items:
+    - build-essential
+    - cmake
+    - cxxtest
+    - rlwrap
+    - guile-2.0-dev
+    - libiberty-dev
+    - libicu-dev
+    - libbz2-dev
+    - cython
+    - python-dev
+    - python-zmq
+    - python-matplotlib
+    - python-nose
+    - python-numpy
+    - python-scipy
+    - python-mock
+    - python-simplejson
+    - python-pyparsing
+    - python-dateutil
+    - python-six
+    - python-tornado
+    - python-wsgiref
+    - libboost-date-time1.54-dev
+    - libboost-filesystem1.54-dev
+    - libboost-program-options1.54-dev
+    - libboost-regex1.54-dev
+    - libboost-serialization1.54-dev
+    - libboost-thread1.54-dev
+    - libboost-system1.54-dev
+    - libjson-spirit-dev
+    - libzmq3-dev
+    - libtbb-dev
+    - binutils-dev
+    - libgsl0-dev
+    - unixodbc-dev
+    - libxerces-c2-dev
+    - uuid-dev
+    - libprotoc-dev
+    - protobuf-compiler
+    - libcurl4-gnutls-dev
+    - libexpat1-dev
+    - libsdl-gfx1.2-dev
+    - libssl-dev
+    - tcl-dev
+    - tcsh
+
+# Runtime packages needed
+- name: Install UnixODBC
+  apt: name=unixodbc state=present
+
+- name: Install doc packages
+  apt: name={{item}} state=present
+  with_items:
+    - ubuntu-docs
+    - libglib2.0-doc
+    - libpango1.0-doc
+    - libgtk-3-doc
+    # not found: - texlive-latex-base-doc
+    - python-doc
+    - devhelp-common
+    # not found: - texlive-doc-base
+    - doxygen
+    - dot2tex
+
+- name: Remove some unused packages
+  apt: name={{item}} state=absent
+  with_items:
+    - ubuntu-desktop
+    - example-content
+    - software-center
+    - app-install-data
+    - locales
+    - python-twisted-core
+    - ubiquity
+    - rhythmbox
+    - rhythmbox-data
+    - empathy
+    - empathy-common
+    - libtelepathy-glib0
+    - firefox
+    - thunderbird
+    - libreoffice-core
+    - evolution-data-server
+    - gnome-games-common
+    - gnome-games-data
+    - aisleriot
+    - deja-dup
+    - gwibber
+    - oneconf
+    - shotwell
+    - ubuntuone-client
+    - python-ubuntuone-client
+    - gnome-orca
+    - libgweather-common
+    - simple-scan
+    - sane-utils
+    - printer-driver-hpcups
+    - printer-driver-hpijs
+    - hplip
+    - hplip-data
+    - libgutenprint2
+    - foo2zjs
+    - colord
+    - libsane
+    - samba-common
+    - gnome-user-guide
+    - ure
+    - smbclient
+    - indicator-messages
+    - ubuntuone-client-gnome
+    - geoip-database
+    - libopencc1
+    - fonts-nanum
+    - ttf-indic-fonts-core
+    - ttf-wqy-microhei
+    - fonts-takao-pgothic
+    - libpurple0
+    - brltty
+    - liblouis-data
+
+- name: Fetch the package for Kerberos admin individually, since not found in archives
+  get_url: url=http://launchpadlibrarian.net/145707779/libkadm5clnt-mit8_1.10.1%2Bdfsg-6.1ubuntu1_amd64.deb
+           dest=/opt/libkadm5clnt-mit8.deb
+
+- name: Install Kerberos admin
+  apt: deb=/opt/libkadm5clnt-mit8.deb
+
+- name: Install extra dev packages
+  apt: name={{item}} state=present update_cache=yes cache_valid_time=3600
+  with_items:
+    - autoconf
+    - automake
+    - autotools-dev
+    - blt
+    - comerr-dev
+    - dpkg-dev
+    - emacsen-common
+    - fakeroot
+    - gettext
+    - gdb
+    - g++-4.6
+    - gcc-4.6
+    - krb5-multidev
+    - libc6-dev
+    - libdpkg-perl
+    - libdpkg-perl
+    - libgcrypt11-dev
+    - libglade2-0
+    - libgnutls-dev
+    - libgpg-error-dev
+    - libgssrpc4
+    - libidn11-dev
+    - libalgorithm-diff-perl
+    - libalgorithm-diff-xs-perl
+    - libalgorithm-merge-perl
+    - libkadm5srv-mit8
+    - libkrb5-dev
+    - libldap2-dev
+    - libltdl-dev
+    - libstdc++6-4.6-dev
+    - libtasn1-3-dev
+    - libtimedate-perl
+    - libtool
+    - libunistring0
+    - libxss1
+    - make
+    - manpages-dev
+    - m4
+    - patch
+    - python-glade2
+    - python-tk
+    - tcl8.5
+    - tk8.5
+    - ttf-lyx
+    - zlib1g-dev
+    - python-bzrlib
+    - linux-headers-generic

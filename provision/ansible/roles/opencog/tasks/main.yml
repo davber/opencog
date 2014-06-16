@@ -1,0 +1,19 @@
+---
+# These are the tasks to prepare a regular OpenCog machine
+
+- name: Link the vagrant directory to two places
+  file: path={{item}} src=/vagrant state=link
+  with_items:
+    - /usr/local/src/opencog
+    - /home/vagrant/opencog
+  tags:
+    - provision
+
+- include: all_packages.yml
+  tags:
+    - provision
+
+- name: Build CogServer
+  shell: cd /vagrant && rm -rf build && mkdir build && cd build && rm -f CMakeCache.txt && cmake .. && make
+  tags:
+    - build

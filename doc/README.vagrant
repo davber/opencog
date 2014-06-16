@@ -1,0 +1,98 @@
+
+Instructions for using the `opencog` controller command
+-----------------------------------------------------
+
+## I Am Busy, Just Show Me The Commands!
+
+Ok, do
+
+    opencog bootstrap && opencog up && opencog run
+
+You now have CogServer running. Congrats!
+
+# Longer Story
+
+There is a top-level tool called `opencog` used to prepare
+an environment -- local, virtualized or AWS -- and build and run OpenCog. Typing
+
+    opencog
+
+will show tasks available.
+
+## Notions
+
+### Host vs Guest vs Deployment Environment
+
+The **host** machine is the one you are using right now.
+The `opencog` CLI tool runs on the host machine, creating and
+manipulating an OpenCog
+**deployment environment** residing either:
+
+* on host machine itself; no middle man, no gloves, just raw
+* inside a virtualized environment, such as Vagrant or Docker, running on
+  the host machine; inside that environment, a **guest** operating system
+  runs. In our case, this is usually a Ubuntu Linux distribution.
+* in the cloud; we currently support only AWS, meaning that the deployment
+  environment is run on one (or more) EC2 instances.
+
+No matter where the deployment environment resides, `opencog` tasks often
+reaches in and operates inside that deployment environment, remotely or not.
+
+### Provision vs Build vs Deploy vs Run
+
+To make a deployment environment ready, one has to ensure all dependencies
+are met, that all 3rd party libraries are present and 3rd party services, such
+as databases, configured and running. This is called **provisioning**.
+
+Installing our deliverables into the deployment environment is **deploying**.
+This means putting CogServer in place and making sure it can run as a service.
+
+**Running** is either starting a service of ours or running a client or test
+application.
+
+## Bootstrap Host
+
+To start using the various tasks, you need to install Vagrant and
+Ansible. There is a task for that
+
+    opencog bootstrap
+
+## Creating Deployment Environment & Deploying
+
+This handles three of the four stages above: provisioning, building
+and deploying.
+
+You can either launch a new VM, by
+
+    opencog up
+
+You can also launch a new EC2, by
+
+    opencog up --target=aws
+
+If you want to develop on or run OpenCog on host machine, you need to
+make sure the compile-time and run-time tools and libraries are present. This
+is achieved by
+
+    opencog dev
+
+You can then create a deployment environment locally, by
+
+    opencog up --target=local
+
+## Rebuild & Deploy
+
+After changing stuff, either dependencies or OpenCog, you can redeploy
+everything, including building, by doing
+
+    opencog provision
+
+This will use the deployment environment setup with `opencog up`.
+
+## Running
+
+### CogServer
+
+Assuming you have deployed as above, you do
+
+    opencog run

@@ -12,12 +12,15 @@ The main project site is at http://opencog.org
 
 Please see doc/ for platform and OS specific READMEs.
 
+**NOTE**: for an alternative way to build, deploy and run OpenCog, see
+[doc/README.vagrant](doc/README.vagrant)
+
 Prerequisites
 -------------
 To build and run OpenCog, the packages listed below are required. With a
 few exceptions, most Linux distributions will provide these packages. Users of
 Ubuntu 14.04 "Trusty Tahr" may use the dependency installer at scripts/octool.
-Users of any version of Linux may use the Dockerfile to quickly build a 
+Users of any version of Linux may use the Dockerfile to quickly build a
 container in which OpenCog will be built and run.
 
 ###### boost
